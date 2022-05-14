@@ -7,18 +7,21 @@ class Customer:
         self.name = name
         self.credits = credits
     
-
+def connectReader():
+    try:
+        global ser 
+        ser = serial.Serial('/dev/ttyUSB1')
+        ser.flushInput()
+    except:
+        print("Could not connect to serial interface.")
+connectReader()
 customers = []
 
 customers.append(Customer("0010A007","Brian Kottarainen",9000.9))
 
 app = FastAPI()
 
-try:
-    ser = serial.Serial('/dev/ttyUSB0')
-    ser.flushInput()
-except:
-    print("Could not connect to serial interface.")
+
 
 @app.get("/getTagNumber")
 def tagNumber():
@@ -28,6 +31,7 @@ def tagNumber():
             print(decoded_bytes)
             return{decoded_bytes}
     except:
+        connectReader()
         print("Error reading from tag")
         return{"Error reading from tag"}
 
