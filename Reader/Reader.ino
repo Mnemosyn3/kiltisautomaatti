@@ -37,8 +37,8 @@ void loop() {
 // Notifies when a reader has been connected or disconnected.
 // Instead of a message, the seconds parameter can be anything you want -- Whatever you specify on `wiegand.onStateChange()`
 void stateChanged(bool plugged, const char* message) {
-    Serial.print(message);
-    Serial.println(plugged ? "CONNECTED" : "DISCONNECTED");
+//    Serial.print(message);
+//    Serial.println(plugged ? "CONNECTED" : "DISCONNECTED");
 }
 
 // Notifies when a card was read.
