@@ -10,7 +10,7 @@ class Customer:
 def connectReader():
     try:
         global ser 
-        ser = serial.Serial('/dev/ttyUSB1')
+        ser = serial.Serial('/dev/ttyUSB0')
         ser.flushInput()
     except:
         print("Could not connect to serial interface.")
