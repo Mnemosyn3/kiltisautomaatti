@@ -1,6 +1,4 @@
-/*
- * Example on how to use the Wiegand reader library with interruptions.
- */
+
 
 #include <Wiegand.h>
 
@@ -58,11 +56,11 @@ void receivedData(uint8_t* data, uint8_t bits, const char* message) {
 
 // Notifies when an invalid transmission is detected
 void receivedDataError(Wiegand::DataError error, uint8_t* rawData, uint8_t rawBits, const char* message) {
-    Serial.print(message);
-    Serial.print(Wiegand::DataErrorStr(error));
-    Serial.print(" - Raw data: ");
-    Serial.print(rawBits);
-    Serial.print("bits / ");
+//    Serial.print(message);
+//    Serial.print(Wiegand::DataErrorStr(error));
+//    Serial.print(" - Raw data: ");
+//    Serial.print(rawBits);
+//    Serial.print("bits / ");
 
     //Print value in HEX
     uint8_t bytes = (rawBits+7)/8;
