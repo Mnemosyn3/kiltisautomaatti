@@ -36,16 +36,38 @@ def tagNumber():
         return{"Error reading from tag"}
 
 @app.get("/getUser")
-def user(tagNumber= str):
+def user(tagNumber: str):
     for obj in customers:
         if obj.tagNumber == tagNumber:
             return{obj.tagNumber,obj.name,obj.credits}
     return{"User not found"}
 
 @app.post("/newUser")
-async def newUser(tagNumber= str,name= str):
+async def newUser(tagNumber: str,name: str):
     try:
         customers.append(Customer(tagNumber,name,0.0))
-        return 1
+        return "success"
     except:
-        return 0
+        return "error"
+
+@app.patch("/addCredits")
+async def addCredits(tagNumber: str,credits: float):
+    try:
+        for obj in customers:
+            if obj.tagNumber == tagNumber:
+                obj.credits = obj.credits + credits
+                return obj.credits
+        return "error"
+    except:
+        return "error"
+
+@app.patch("/removeCredits")
+async def addCredits(tagNumber: str,credits: float):
+    try:
+        for obj in customers:
+            if obj.tagNumber == tagNumber:
+                obj.credits = obj.credits - credits
+                return obj.credits
+        return "error"
+    except:
+        return "error"
