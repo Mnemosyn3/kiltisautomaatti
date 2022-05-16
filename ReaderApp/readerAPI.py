@@ -41,3 +41,11 @@ def user(tagNumber= str):
         if obj.tagNumber == tagNumber:
             return{obj.tagNumber,obj.name,obj.credits}
     return{"User not found"}
+
+@app.post("/newUser")
+async def newUser(tagNumber= str,name= str):
+    try:
+        customers.append(Customer(tagNumber,name,0.0))
+        return 1
+    except:
+        return 0
