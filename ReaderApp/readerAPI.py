@@ -1,12 +1,14 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 import serial
 
-class Customer:
-    def __init__(self, tagNumber, name, credits):
-        self.tagNumber = tagNumber
-        self.name = name
-        self.credits = credits
-    
+
+class User(BaseModel):
+    tagNumber: str
+    name: str
+    credits: float
+
+
 def connectReader():
     try:
         global ser 
@@ -14,10 +16,12 @@ def connectReader():
         ser.flushInput()
     except:
         print("Could not connect to serial interface.")
-connectReader()
-customers = []
 
-customers.append(Customer("0010A007","Brian Kottarainen",9000.9))
+connectReader()
+users = []
+
+users.append(User(tagNumber='0010A007',name='Brian Kottarainen',credits='9000.9'))
+
 
 app = FastAPI()
 
@@ -37,16 +41,16 @@ def tagNumber():
 
 @app.get("/getUser")
 def user(tagNumber: str):
-    for obj in customers:
+    for obj in users:
         if obj.tagNumber == tagNumber:
             return{obj.tagNumber,obj.name,obj.credits}
     return{"User not found"}
 
 @app.post("/newUser")
-async def newUser(tagNumber: str,name: str):
+async def newUser(user:User):
     try:
         customers.append(Customer(tagNumber,name,0.0))
-        return "success"
+        return 
     except:
         return "error"
 
