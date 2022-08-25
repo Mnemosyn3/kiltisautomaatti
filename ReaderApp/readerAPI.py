@@ -21,7 +21,8 @@ connectReader()
 users = []
 
 users.append(User(tagNumber='0010A007',name='Brian Kottarainen',credits='9000.9'))
-
+#brian = User(tagNumber='0010A007',name='Brian Kottarainen',credits='9000.9')
+#print(brian.tagNumber)
 
 app = FastAPI()
 
@@ -42,14 +43,14 @@ def tagNumber():
 @app.get("/getUser")
 def user(tagNumber: str):
     for obj in users:
-        if obj.tagNumber == tagNumber:
+        if (obj.tagNumber == tagNumber):
             return{obj.tagNumber,obj.name,obj.credits}
     return{"User not found"}
 
 @app.post("/newUser")
 async def newUser(user:User):
     try:
-        customers.append(Customer(tagNumber,name,0.0))
+        users.append(User(tagNumber=tagNumber,name=name,credits='0.0'))
         return 
     except:
         return "error"
@@ -57,7 +58,7 @@ async def newUser(user:User):
 @app.patch("/addCredits")
 async def addCredits(tagNumber: str,credits: float):
     try:
-        for obj in customers:
+        for obj in users:
             if obj.tagNumber == tagNumber:
                 obj.credits = obj.credits + credits
                 return obj.credits
@@ -68,7 +69,7 @@ async def addCredits(tagNumber: str,credits: float):
 @app.patch("/removeCredits")
 async def addCredits(tagNumber: str,credits: float):
     try:
-        for obj in customers:
+        for obj in users:
             if obj.tagNumber == tagNumber:
                 obj.credits = obj.credits - credits
                 return obj.credits
