@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.encoders import jsonable_encoder
 import serial
 
 
@@ -44,35 +45,25 @@ def tagNumber():
 def user(tagNumber: str):
     for obj in users:
         if (obj.tagNumber == tagNumber):
-            return{obj.tagNumber,obj.name,obj.credits}
+            return jsonable_encoder(obj)
     return{"User not found"}
 
 @app.post("/newUser")
 async def newUser(user:User):
     try:
-        users.append(User(tagNumber=tagNumber,name=name,credits='0.0'))
-        return 
+        users.append(user)
+        return user
     except:
-        return "error"
+        return {"error"}
 
-@app.patch("/addCredits")
-async def addCredits(tagNumber: str,credits: float):
+@app.patch("/updateCredits")
+async def addCredits(user:User):
     try:
         for obj in users:
-            if obj.tagNumber == tagNumber:
-                obj.credits = obj.credits + credits
+            if obj.tagNumber == user.tagNumber:
+                obj.credits = user.credits
                 return obj.credits
         return "error"
     except:
         return "error"
 
-@app.patch("/removeCredits")
-async def addCredits(tagNumber: str,credits: float):
-    try:
-        for obj in users:
-            if obj.tagNumber == tagNumber:
-                obj.credits = obj.credits - credits
-                return obj.credits
-        return "error"
-    except:
-        return "error"
