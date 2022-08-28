@@ -28,6 +28,7 @@ users.append(User(tagNumber='0010A007',name='Brian Kottarainen',credits='9000.9'
 app = FastAPI()
 
 
+#Pretty self evident, returns the number of the next tag, that is read.
 
 @app.get("/getTagNumber")
 def tagNumber():
@@ -41,12 +42,16 @@ def tagNumber():
         print("Error reading from tag")
         return{"Error reading from tag"}
 
+#returns the user assiciated with the tagNumber as a JSON object.
+
 @app.get("/getUser")
 def user(tagNumber: str):
     for obj in users:
         if (obj.tagNumber == tagNumber):
             return jsonable_encoder(obj)
     return{"User not found"}
+
+#Creates a new user, takes JSON object as a input.
 
 @app.post("/newUser")
 async def newUser(user:User):
@@ -55,6 +60,8 @@ async def newUser(user:User):
         return user
     except:
         return {"error"}
+
+#Updates the credits of the user, takes JSON object as a input.
 
 @app.patch("/updateCredits")
 async def addCredits(user:User):
