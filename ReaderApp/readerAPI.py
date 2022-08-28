@@ -64,7 +64,7 @@ async def newUser(user:User):
 #Updates the credits of the user, takes JSON object as a input.
 
 @app.patch("/updateCredits")
-async def addCredits(user:User):
+async def updateCredits(user:User):
     try:
         for obj in users:
             if obj.tagNumber == user.tagNumber:
