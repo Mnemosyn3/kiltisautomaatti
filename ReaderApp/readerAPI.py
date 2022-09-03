@@ -28,7 +28,7 @@ app = FastAPI()
 
 #Pretty self evident, returns the number of the next tag, that is read.
 
-@app.get("/getTagNumber")
+@app.get("/TagNumber")
 def tagNumber():
     try:
             ser_bytes = ser.readline()
@@ -42,7 +42,7 @@ def tagNumber():
 
 #returns the user assiciated with the tagNumber as a JSON object.
 
-@app.get("/getUser")
+@app.get("/User")
 def user(tagNumber: str):
     for obj in users:
         if (obj.tagNumber == tagNumber):
@@ -51,7 +51,7 @@ def user(tagNumber: str):
 
 #Creates a new user, takes JSON object as a input.
 
-@app.post("/newUser")
+@app.post("/User")
 async def newUser(user:User):
     try:
         users.append(user)
@@ -61,7 +61,7 @@ async def newUser(user:User):
 
 #Updates the credits of the user, takes JSON object as a input.
 
-@app.patch("/updateCredits")
+@app.put("/updateCredits")
 async def updateCredits(user:User):
     try:
         for obj in users:
